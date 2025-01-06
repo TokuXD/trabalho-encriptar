@@ -5,7 +5,7 @@
             public class App {
                 public static void main(String[] args) throws Exception {
                     
-                    Scanner resposta = new Scanner (System.in);
+                  
 
                     while (true){
                     System.out.println("1 - Gravar ficheiro");
@@ -16,38 +16,45 @@
                     
                     System.out.println("\n escolha (0,5):");
 
+                    Scanner resposta = new Scanner (System.in);
                     
-                        int Respostan = resposta.nextInt();
-                        
+                    int Respostan = resposta.nextInt();
+
+
                         switch (Respostan) {
                             case 1: 
+                           
                             GravarFicheiro();
                             break;
 
                             case 2:
+                          
                             LerFicheiro();
                             break;
 
                             case 3:
+                           
                             EncriptarFicheiro();
                             break;
 
                             case 4:
+                            
                             Desencriptar();
                             break;
 
                             case 5:
-                            System.out.println("Programa terminado. Adeus!");
-                            resposta.close(); 
-                            return;
+                          
+                            System.out.println("Programa terminado. Adeus!");   
+                            resposta.close();                         
+                            break;
                             
                             default:
                             System.out.println("Opção inválida! Tente novamente.");
                             
                         }
                         
-                       
                     }
+                    
                 }
 
 
@@ -58,6 +65,33 @@
                     String nomeFicheiro = (input.nextLine() + ".txt");
                     System.out.println("introduza o texto q quer gravar: ('ENTER para terminar')");
                     String textoCompleto = input.nextLine();
+                    
+                   char []  fileTxtsArr = textoCompleto.toCharArray();
+                   for (int i = 0; i < fileTxtsArr.length; i++) {
+                        switch(fileTxtsArr[i]) {
+                            case 160: case 8230: case 198: case 402:
+                                fileTxtsArr[i] = 'a';
+                                break;
+                            case 8218: case 710:
+                                fileTxtsArr[i] = 'e';
+                                break;
+                            case 161:
+                                fileTxtsArr[i] = 'i';
+                                break;
+                            case 162: case 228:
+                                fileTxtsArr[i] = 'o';
+                                break;
+                            case 163:
+                                fileTxtsArr[i] = 'u';
+                                break;
+                            case 8225:
+                                fileTxtsArr[i] = 'c';
+                                break;
+                            default:
+                                break;
+                        }
+                    }
+
                     try {
                         
                         File OBJ = new File(nomeFicheiro);
@@ -67,13 +101,16 @@
                             System.out.println("Ficheiro ja existe ");
                         }
                         FileWriter Escrever = new FileWriter(nomeFicheiro);
-                        Escrever.write(textoCompleto.toLowerCase());
+                        Escrever.write(String.valueOf(fileTxtsArr).toLowerCase());
+                        
                         Escrever.close();
                     } catch (Exception e) {
                         System.out.println(e);
                     }
                 input.close();
                 };
+
+
 
             public static void LerFicheiro(){
                 Scanner input = new Scanner(System.in);
@@ -92,6 +129,8 @@
                     System.out.println("Erro");
                 }
             }
+
+
 
             public static void EncriptarFicheiro(){
 
@@ -115,7 +154,7 @@
                             if (letra >= 'a' && letra <= 'z') {
                                 
                                 letra = (char) (((letra - 'a' + chaveEncriptaçao) % 26) + 'a');      
-                                ///chaveEncriptaçao = letra;
+                               
                             } 
                                 
                                                    
